@@ -1,0 +1,28 @@
+﻿@page "/test-streaming"
+@rendermode InteractiveServer
+
+<PageTitle>Counter</PageTitle>
+
+<p>This is some html that should get loaded immediately.</p>
+
+@if (_number != 0)
+{
+    <p role="status">This html should get loaded after number is delayed and set: @_number</p>
+}
+
+@code {
+
+    private int _number = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _number = await GetTotalNumberOfSomething();
+    }
+
+    private async Task<int> GetTotalNumberOfSomething()
+    {
+        await Task.Delay(TimeSpan.FromSeconds(5));
+        return 10;
+    }
+
+}
